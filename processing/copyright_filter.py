@@ -14,7 +14,8 @@ class CopyrightDatabase:
     def get_all_texts(self):
         return self.copyrighted_texts
 
-def is_potentially_copyrighted(chunk, copyright_db):
+def is_potentially_copyrighted(chunk, copyright_db, device):
+    # The device parameter is not used here, but included for consistency
     if copyright_db.has_exact_match(chunk):
         return True
     
@@ -24,5 +25,5 @@ def is_potentially_copyrighted(chunk, copyright_db):
     
     return False
 
-def filter_copyrighted_content(chunks, copyright_db):
-    return [chunk for chunk in chunks if not is_potentially_copyrighted(chunk, copyright_db)]
+def filter_copyrighted_content(chunks, copyright_db, device):
+    return [chunk for chunk in chunks if not is_potentially_copyrighted(chunk, copyright_db, device)]
