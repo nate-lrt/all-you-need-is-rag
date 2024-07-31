@@ -14,6 +14,11 @@ class DatasetProcessorGUI:
         master.title("Dataset Processor")
         master.geometry("400x250")
 
+        # Initialize status_var here
+        self.status_var = tk.StringVar()
+        self.status_label = tk.Label(master, textvariable=self.status_var)
+        self.status_label.pack(pady=5)
+
         self.setup_directories()
         self.check_gpu()
 
@@ -30,17 +35,13 @@ class DatasetProcessorGUI:
         self.start_button = tk.Button(master, text="Start Processing", command=self.start_processing, state=tk.DISABLED)
         self.start_button.pack(pady=10)
 
-        # Initialize status_var here
-        self.status_var = tk.StringVar()
-        self.status_label = tk.Label(master, textvariable=self.status_var)
-        self.status_label.pack(pady=5)
-
-
     def setup_directories(self):
-        home_dir = os.path.expanduser("~")
-        self.finetuning_dir = os.path.join(home_dir, "tunepilot", "finetuning")
-        self.raw_data_dir = os.path.join(self.finetuning_dir, "raw_data")
-        self.processed_data_dir = os.path.join(self.finetuning_dir, "preprocessed_data")
+        # only way I could get it to work without it saying "permission denied" but now it always creates a directory called /~/ in the root folder... 
+        # idk how tf to fix this im probably just stupid
+        
+        self.finetuning_dir = "~/data/"
+        self.raw_data_dir = os.path.join(self.finetuning_dir, "data", "raw_data")
+        self.processed_data_dir = os.path.join(self.finetuning_dir, "data", "preprocessed_data")
 
         try:
             os.makedirs(self.raw_data_dir, exist_ok=True)
@@ -63,7 +64,6 @@ class DatasetProcessorGUI:
         if path:
             self.selected_path.set(path)
             self.start_button['state'] = tk.NORMAL
-
     def start_processing(self):
         input_path = self.selected_path.get()
         if not input_path:
@@ -79,33 +79,31 @@ class DatasetProcessorGUI:
         except Exception as e:
             self.status_var.set(f"Error occurred: {str(e)}")
             messagebox.showerror("Error", str(e))
-
+        print ("processing complete")
+        
     def process_directory(self, directory):
         copyright_db = CopyrightDatabase()
-        
         file_types = identify_file_types(directory)
         print("File types in directory:", file_types)
-        
         pdf_files = get_pdf_files(directory)
-        
         all_results = []
+
         for file in pdf_files:
             pdf_path = os.path.join(directory, file)
             print(f"Processing {file}...")
-            
             try:
                 # Copy raw PDF to raw_data directory
                 raw_pdf_path = os.path.join(self.raw_data_dir, file)
                 with open(pdf_path, 'rb') as src, open(raw_pdf_path, 'wb') as dst:
                     dst.write(src.read())
-                
+
                 # Process the PDF
                 all_results.extend(self.process_pdf(pdf_path, copyright_db))
             except PermissionError as e:
                 print(f"Permission error processing {file}: {e}")
             except Exception as e:
                 print(f"Error processing {file}: {e}")
-        
+
         # Save processed data as JSON in the processed_data directory
         output_file = os.path.join(self.processed_data_dir, 'preprocessed_data.json')
         try:
@@ -113,14 +111,14 @@ class DatasetProcessorGUI:
                 json.dump(all_results, f)
         except PermissionError as e:
             raise PermissionError(f"Unable to write output file: {e}")
-        
+
         return output_file
 
     def process_pdf(self, pdf_path, copyright_db):
         text = extract_text_from_pdf(pdf_path, self.device)
-        processed_text = preprocess_text(text, self.device)
-        chunked_text = chunk_text(processed_text, device=self.device)
-        filtered_chunks = filter_copyrighted_content(chunked_text, copyright_db)
+        processed_text = preprocess_text(text)
+        chunked_text = chunk_text(processed_text)
+        filtered_chunks = filter_copyrighted_content(chunked_text, copyright_db, self.device)
         metadata = extract_metadata(pdf_path)
         
         result = []
