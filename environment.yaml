@@ -1,12 +1,25 @@
+name: my_project_env
 channels:
-  - conda-forge
   - defaults
 dependencies:
-  - python=3.9
-  - pypdf2=3.0.1
+  # System libraries
+  # No system library is listed as it's purely a Python-based application.
+  
+  # Python packages
+  - numpy=1.23.5
+  - pandas=1.4.3
+  - scipy=1.9.3
   - nltk=3.7
-  - fuzzywuzzy=0.18.0
-  - python-levenshtein=0.12.2
-  - pip
-  - pip:
-    - python-Levenshtein==0.12.2
+  - spacy=3.2.4
+  
+  # Deep Learning and NLP libraries
+  - transformers=4.16.2
+  - torch=1.10.0
+  - tensorflow=2.8.0
+  
+  # Data handling and visualization
+  - matplotlib=3.5.2
+  - seaborn=0.11.2
+  
+  # General utilities
+  - tk=0.1.0
