@@ -8,13 +8,6 @@ This repository contains two Python scripts designed for processing files in a d
 
 ### `gui.py`
 
-#### Functions:
-1. **start_processing()**
-   - This function initiates processing on the selected directory. It updates status messages based on whether the operation is successful or encounters an error.
-   
-2. **process_directory(input_path)**
-   - This function should be implemented to handle specific operations with files in `input_path`. The exact implementation details are not provided in this document but would involve using functions from `file_utils.py`.
-
 #### Usage:
 To run the GUI application, ensure you have Tkinter installed and then execute `gui.py` script. It will open a window to select a directory for processing.
 
