@@ -6,27 +6,6 @@ This repository contains two Python scripts designed for processing files in a d
 
 ## Scripts
 
-### `file_utils.py`
-
-#### Functions:
-1. **identify_file_types(directory)**
-   - This function takes a directory path as input and returns a dictionary mapping file extensions to their counts in the specified directory.
-   
-2. **get_pdf_files(directory)**
-   - This function lists all files with a `.pdf` extension from the provided directory.
-
-#### Usage:
-To use these functions, you need to import them into your Python script and call them with appropriate directory paths.
-
-```python
-from file_utils import identify_file_types, get_pdf_files
-
-# Example usage:
-directory = "/path/to/your/directory"
-print(identify_file_types(directory))  # Outputs a dictionary of file types and their counts
-print(get_pdf_files(directory))        # Lists all PDF files in the directory
-```
-
 ### `gui.py`
 
 #### Functions:
