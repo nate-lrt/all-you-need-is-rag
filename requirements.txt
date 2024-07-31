@@ -1,0 +1,24 @@
+# This file lists all Python packages required by the project.
+# Ensure you have these installed before running the scripts.
+
+# System libraries
+# No system library is listed as it's purely a Python-based application.
+
+# Python packages
+numpy==1.23.5  # For numerical operations, used in some parts of the codebase but not explicitly mentioned where.
+pandas==1.4.3  # For data manipulation and analysis.
+scipy==1.9.3   # Scientific computing library, possibly used for specific scientific calculations or preprocessing steps.
+nltk==3.7      # Natural Language Toolkit, useful for text processing tasks like tokenization or sentiment analysis.
+spacy==3.2.4  # A library for natural language processing, specifically using models trained on massive text corpora.
+
+# Deep Learning and NLP libraries
+transformers==4.16.2  # Hugging Face's Transformers library, useful for working with state-of-the-art models in NLP tasks.
+torch==1.10.0        # PyTorch, a popular deep learning framework used for building neural networks.
+tensorflow==2.8.0    # TensorFlow, another widely used deep learning framework, although not explicitly mentioned in the codebase.
+
+# Data handling and visualization
+matplotlib==3.5.2  # Plotting library for creating static, animated, and interactive visualizations.
+seaborn==0.11.2     # Statistical data visualization library based on matplotlib.
+
+# General utilities
+tk==0.1.0           # Tkinter, standard GUI library in Python, used for the graphical user interface.
