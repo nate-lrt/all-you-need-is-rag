@@ -40,11 +40,9 @@ class DatasetProcessorGUI:
         # idk how tf to fix this im probably just stupid
         
         self.finetuning_dir = "~/data/"
-        self.raw_data_dir = os.path.join(self.finetuning_dir, "data", "raw_data")
         self.processed_data_dir = os.path.join(self.finetuning_dir, "data", "preprocessed_data")
 
         try:
-            os.makedirs(self.raw_data_dir, exist_ok=True)
             os.makedirs(self.processed_data_dir, exist_ok=True)
         except PermissionError as e:
             messagebox.showerror("Error", f"Permission denied: {e}\nPlease run the script with appropriate permissions.")
@@ -92,11 +90,6 @@ class DatasetProcessorGUI:
             pdf_path = os.path.join(directory, file)
             print(f"Processing {file}...")
             try:
-                # Copy raw PDF to raw_data directory
-                raw_pdf_path = os.path.join(self.raw_data_dir, file)
-                with open(pdf_path, 'rb') as src, open(raw_pdf_path, 'wb') as dst:
-                    dst.write(src.read())
-
                 # Process the PDF
                 all_results.extend(self.process_pdf(pdf_path, copyright_db))
             except PermissionError as e:
